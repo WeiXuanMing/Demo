@@ -24,7 +24,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private RecyclerView recyclerView;
     private List<String> stringList;
 
-    //修改注释
+    //修改注释修
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
