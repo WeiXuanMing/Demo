@@ -23,6 +23,7 @@ public class MainActivity extends Activity implements RadioGroup.OnCheckedChange
     private Fragment videoFragment;
     private RecyclerView recyclerView;
     private List<String> stringList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,11 +31,25 @@ public class MainFragment extends Fragment {
         initDatas();
         //为recyclerview设置适配器
         SimperAdater simperAdater = new SimperAdater(view.getContext(),stringList);
+        simperAdater.setOnItemClickListener(new SimperAdater.OnItemClickListener() {
+            //设置recyclerview选项的点击事件
+            @Override
+            public void onClick(View view, int position) {
+                Toast.makeText(view.getContext(),"这是新闻"+position,Toast.LENGTH_LONG).show();
+            }
+            //设置recyclerview选项的长按事件
+            @Override
+            public void onLongClick(View view, int position) {
+                Toast.makeText(view.getContext(),"这是新闻"+position+"长按",Toast.LENGTH_LONG).show();
+            }
+        });
         recyclerView.setAdapter(simperAdater);
         LinearLayoutManager linearLayoutmanager = new LinearLayoutManager(view.getContext(),LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(linearLayoutmanager);
         //设置分割线
         recyclerView.addItemDecoration(new DividerItemDecoration(view.getContext(), DividerItemDecoration.VERTICAL));
+
+
         return view;
     }
     private void initDatas() {

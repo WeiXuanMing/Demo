@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -23,7 +24,14 @@ public class SimperAdater extends RecyclerView.Adapter<MyViewHolder> {
         mcontext = context;
         inflater = LayoutInflater.from(context);
     }
-
+    interface OnItemClickListener{
+        void onClick(View view,int position);
+        void onLongClick(View view,int position);
+    }
+    private OnItemClickListener monItemClickListener;
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener){
+        this.monItemClickListener = onItemClickListener;
+    }
     //创建ViewHolder
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -33,8 +41,23 @@ public class SimperAdater extends RecyclerView.Adapter<MyViewHolder> {
     }
     //绑定ViewHolder
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.tv.setText(mstringList.get(position));
+        if(monItemClickListener != null){
+            holder.tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    monItemClickListener.onClick(holder.ItemView,position);
+                }
+            });
+            holder.tv.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    monItemClickListener.onLongClick(holder.ItemView,position);
+                    return false;
+                }
+            });
+        }
     }
     //获取item数量
     @Override
@@ -44,8 +67,10 @@ public class SimperAdater extends RecyclerView.Adapter<MyViewHolder> {
 }
 class MyViewHolder extends RecyclerView.ViewHolder {
     TextView tv;
+    View ItemView;
     public MyViewHolder(View view) {
         super(view);
+        this.ItemView = view;
         tv = (TextView)view.findViewById(R.id.item_textview);
     }
 }
